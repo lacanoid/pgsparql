@@ -23,3 +23,9 @@ And finally inside the database:
 Using
 -----
 
+Get data on a particulat dbpedia resource:
+
+```sql
+SELECT * 
+  FROM sparql.get_properties('dbpedia','http://dbpedia.org/resource/Johann_Sebastian_Bach')
+```
