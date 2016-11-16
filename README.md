@@ -23,7 +23,7 @@ And finally inside the database:
 Using
 -----
 
-Get data on a particulat dbpedia resource:
+Get data on a particular dbpedia resource:
 
 ```sql
 SELECT * 
