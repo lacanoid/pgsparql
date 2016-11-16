@@ -1,29 +1,6 @@
---
--- PostgreSQL database dump
---
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
---
--- Name: sparql; Type: SCHEMA; Schema: -; Owner: sparql
---
-
 CREATE SCHEMA sparql;
 
-
-ALTER SCHEMA sparql OWNER TO sparql;
-
---
--- Name: SCHEMA sparql; Type: COMMENT; Schema: -; Owner: sparql
---
-
 COMMENT ON SCHEMA sparql IS 'Interface to Virtuoso SPARQL endpoint';
-
 
 SET search_path = sparql, pg_catalog;
 
@@ -32,9 +9,6 @@ SET search_path = sparql, pg_catalog;
 --
 
 CREATE DOMAIN iri AS text;
-
-
-ALTER DOMAIN iri OWNER TO sparql;
 
 --
 -- Name: compile_query(name, text, text, name[]); Type: FUNCTION; Schema: sparql; Owner: ziga
@@ -130,9 +104,6 @@ return  $ddl;
 
 $_X$;
 
-
-ALTER FUNCTION sparql.compile_query(endpoint_name name, identifier text, query text, group_by name[]) OWNER TO ziga;
-
 --
 -- Name: config(text); Type: FUNCTION; Schema: sparql; Owner: sparql
 --
@@ -143,121 +114,11 @@ CREATE FUNCTION config(var text) RETURNS text
 select "value" from sparql.config where "name"=$1;
 $_$;
 
-
-ALTER FUNCTION sparql.config(var text) OWNER TO sparql;
-
 --
 -- Name: FUNCTION config(var text); Type: COMMENT; Schema: sparql; Owner: sparql
 --
 
 COMMENT ON FUNCTION config(var text) IS 'Return configuration setting';
-
-
---
--- Name: dbpedia_info(text); Type: FUNCTION; Schema: sparql; Owner: wdbi
---
-
-CREATE FUNCTION dbpedia_info(label text, OUT predicate text, OUT ol text, OUT object text, OUT ll text, OUT label text) RETURNS SETOF record
-    LANGUAGE plperlu COST 2000 ROWS 200
-    AS $_X$
-use LWP::Simple;
-use URI::Escape;
-use JSON;
-use Encode;
-
-my ($label)=@_;
-my $lang='en';
-unless($label) { return; }
-
-sub tt_t { $_[0]=~s!(\\|"|\n|\r|\t)!{"\t"=>'\t',"\n"=>'\n',"\r"=>'\r','"'=>'\"','\\'=>'\\\\' }->{$1}!ges; qq{"$_[0]"}; }
-
-$label = tt_t($label);
-
-my $query = <<"SPARQL";
-select distinct ?predicate, LANG(?object) as ?ol, ?object, LANG(?label) AS ?ll, ?label
-where {
- ?s ?predicate ?object.
- ?s rdfs:label $label\@$lang.
- optional {?object rdfs:label ?label}.
-}
-SPARQL
-
-my $url  = "http://dbpedia.org/sparql/?debug=on&timeout=&save=display&fname=&format=application%2Fsparql-results%2Bjson&query=".uri_escape_utf8($query);
-my $json = get($url); 
-$json=~s!\\U([0-9A-F]+)!chr($1)!ge;
-my $data = JSON->new->utf8(1)->decode(Encode::encode_utf8($json));
-my $vars = $data->{head}{vars};
-my $bindings = $data->{results}{bindings};
-for my $row (@{$bindings}) {
-	my $r = {};
-	for my $var (@{$vars}) { $r->{$var}=$row->{$var}{value}; }
-	return_next $r;
-}
-return undef;
-$_X$;
-
-
-ALTER FUNCTION sparql.dbpedia_info(label text, OUT predicate text, OUT ol text, OUT object text, OUT ll text, OUT label text) OWNER TO wdbi;
-
---
--- Name: dbpedia_properties(name); Type: FUNCTION; Schema: sparql; Owner: wdbi
---
-
-CREATE FUNCTION dbpedia_properties(endpoint_name name DEFAULT 'dbpedia'::name, OUT property text, OUT label text) RETURNS SETOF record
-    LANGUAGE plperlu COST 5000
-    AS $_X$
-use LWP::Simple;
-use URI::Escape;
-use Try::Tiny;
-use JSON;
-
-my ($name) = @_;
-my $p = spi_prepare('select sparql.endpoint_url($1)','name');
-my $endpoint_url = spi_exec_prepared($p,$name)->{rows}->[0]->{endpoint_url};
-unless($endpoint_url) {
-  elog(ERROR,'No endpoint definition in sparql.endpoint for name "'.$name.'"');
-}
-my $extras="?debug=on&timeout=&save=display&fname=".
-	   "&format=".uri_escape("application/sparql-results+json").
-	   "&query=";
-	   
-my $query = <<"SPARQL";
-SELECT distinct * 
-WHERE { 
- ?property rdf:type rdf:Property.
- optional { 
-   ?property rdfs:label ?label 
-   filter ( langMatches(lang(?label), "EN")) 
- }
-}
-SPARQL
-
-my $url  = $endpoint_url.$extras.uri_escape_utf8($query);
-my $json = get($url); 
-# $json=~s!\U([0-9A-F]+)!chr(hex($1))!ge;
-try { my $data = decode_json($json);
-  my $vars = $data->{head}{vars};
-  my $bindings = $data->{results}{bindings};
-  for my $row (@{$bindings}) {
-	my $r = {};
-	for my $var (@{$vars}) { $r->{$var}=$row->{$var}{value}; }
-	return_next $r;
-  }
-  return undef;
-} catch {
-  elog(ERROR,"SPARQL ENDPOINT FAILURE\n$_");
-}
-$_X$;
-
-
-ALTER FUNCTION sparql.dbpedia_properties(endpoint_name name, OUT property text, OUT label text) OWNER TO wdbi;
-
---
--- Name: FUNCTION dbpedia_properties(endpoint_name name, OUT property text, OUT label text); Type: COMMENT; Schema: sparql; Owner: wdbi
---
-
-COMMENT ON FUNCTION dbpedia_properties(endpoint_name name, OUT property text, OUT label text) IS 'Compiled with sparql.compile_query() at 2015-12-09T19:31:09Z';
-
 
 --
 -- Name: endpoint_url(name); Type: FUNCTION; Schema: sparql; Owner: sparql
@@ -269,76 +130,11 @@ CREATE FUNCTION endpoint_url(endpoint_name name) RETURNS text
 select url from sparql.endpoint where name = $1
 $_$;
 
-
-ALTER FUNCTION sparql.endpoint_url(endpoint_name name) OWNER TO sparql;
-
 --
 -- Name: FUNCTION endpoint_url(endpoint_name name); Type: COMMENT; Schema: sparql; Owner: sparql
 --
 
 COMMENT ON FUNCTION endpoint_url(endpoint_name name) IS 'Return SPARQL endpoint url for named endpoint';
-
-
---
--- Name: get_properties(text); Type: FUNCTION; Schema: sparql; Owner: sparql
---
-
-CREATE FUNCTION get_properties(iri text, OUT predicate text, OUT label text, OUT object text, OUT value text) RETURNS SETOF record
-    LANGUAGE plperlu ROWS 5000
-    AS $_$
-use LWP::Simple;
-use URI::Escape;
-use JSON;
-
-my ($iri)=shift(@_);
-unless($iri) { return; }
-
-$iri=~s!(\\|>|\n|\r|\t)!{"\t"=>'\t',"\n"=>'\n',"\r"=>'\r','>'=>'\>','\\'=>'\\\\' }->{$1}!ges; 
-$iri=qq{<$iri>};
-my $query = <<"SPARQL";
-prefix csip:  <http://culture.si/en/Special:URIResolver/Property-3A> 
-prefix csic:  <http://culture.si/en/Special:URIResolver/Category-3A> 
-prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
-prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix vc:    <http://www.w3.org/2006/vcard/ns#>
-prefix swivt: <http://semantic-mediawiki.org/swivt/1.0#>
-prefix dc:    <http://purl.org/dc/elements/1.1/>
-prefix foaf:  <http://xmlns.com/foaf/0.1/>
-
-select distinct 
- (?p as ?predicate), 
- (?l as ?label), 
- (?o as ?object),
- (coalesce(?lo, ?o) as ?value)
-where {
-  $iri ?p ?o.
-  OPTIONAL {?p rdfs:label ?l}.
-  OPTIONAL {?o rdfs:label ?lo}.
-}
-order by ?p
-SPARQL
-
-my $url  = "http://virtuoso.ljudmila.net:8890/sparql/?debug=on&timeout=&save=display&fname=&format=application%2Fsparql-results%2Bjson&query=".uri_escape($query);
-my $json = get($url);
-my $data = decode_json($json);
-my $vars = $data->{head}{vars};
-my $bindings = $data->{results}{bindings};
-for my $row (@{$bindings}) {
-	my $r = {};
-	for my $var (@{$vars}) { $r->{$var}=$row->{$var}{value}; }
-	return_next $r;
-}
-return undef;
-$_$;
-
-
-ALTER FUNCTION sparql.get_properties(iri text, OUT predicate text, OUT label text, OUT object text, OUT value text) OWNER TO sparql;
-
---
--- Name: FUNCTION get_properties(iri text, OUT predicate text, OUT label text, OUT object text, OUT value text); Type: COMMENT; Schema: sparql; Owner: sparql
---
-
-COMMENT ON FUNCTION get_properties(iri text, OUT predicate text, OUT label text, OUT object text, OUT value text) IS 'Get properties for RDF resource from SPARQL endpoint';
 
 
 --
@@ -363,8 +159,6 @@ unless($baseUrl) {
 $iri=~s!(\\|>|\n|\r|\t)!{"\t"=>'\t',"\n"=>'\n',"\r"=>'\r','>'=>'\>','\\'=>'\\\\' }->{$1}!ges; 
 $iri=qq{<$iri>};
 my $query = <<"SPARQL";
-prefix csip:  <http://culture.si/en/Special:URIResolver/Property-3A> 
-prefix csic:  <http://culture.si/en/Special:URIResolver/Category-3A> 
 prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
 prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix vc:    <http://www.w3.org/2006/vcard/ns#>
@@ -397,9 +191,6 @@ for my $row (@{$bindings}) {
 return undef;
 $_$;
 
-
-ALTER FUNCTION sparql.get_properties(endpoint_name name, iri text, OUT predicate text, OUT object text, OUT value text, OUT lang text) OWNER TO sparql;
-
 --
 -- Name: FUNCTION get_properties(endpoint_name name, iri text, OUT predicate text, OUT object text, OUT value text, OUT lang text); Type: COMMENT; Schema: sparql; Owner: sparql
 --
@@ -419,9 +210,6 @@ CREATE FUNCTION iri_ident(text) RETURNS text
   return undef;
 $_$;
 
-
-ALTER FUNCTION sparql.iri_ident(text) OWNER TO sparql;
-
 --
 -- Name: iri_prefix(text); Type: FUNCTION; Schema: sparql; Owner: sparql
 --
@@ -433,9 +221,6 @@ CREATE FUNCTION iri_prefix(text) RETURNS text
   if($url=~s!([/#])([_\-a-zA-Z0-9]+)$!$1!) { return $url; }
   return undef;
 $_$;
-
-
-ALTER FUNCTION sparql.iri_prefix(text) OWNER TO sparql;
 
 --
 -- Name: properties(name); Type: FUNCTION; Schema: sparql; Owner: sparql
@@ -488,17 +273,11 @@ try { my $data = decode_json($json);
 }
 $_X$;
 
-
-ALTER FUNCTION sparql.properties(endpoint_name name, OUT pred text, OUT label text, OUT comment text, OUT cardinality text, OUT range text, OUT "isDefinedBy" text) OWNER TO sparql;
-
 --
 -- Name: FUNCTION properties(endpoint_name name, OUT pred text, OUT label text, OUT comment text, OUT cardinality text, OUT range text, OUT "isDefinedBy" text); Type: COMMENT; Schema: sparql; Owner: sparql
 --
 
 COMMENT ON FUNCTION properties(endpoint_name name, OUT pred text, OUT label text, OUT comment text, OUT cardinality text, OUT range text, OUT "isDefinedBy" text) IS 'Compiled with sparql.compile_query()';
-
-
-SET default_tablespace = '';
 
 SET default_with_oids = false;
 
@@ -521,26 +300,6 @@ ALTER TABLE config OWNER TO sparql;
 --
 
 COMMENT ON TABLE config IS 'Various configuration options';
-
-
---
--- Name: dbpedia_properties; Type: VIEW; Schema: sparql; Owner: wdbi
---
-
-CREATE VIEW dbpedia_properties AS
- SELECT dbpedia_properties.property,
-    dbpedia_properties.label
-   FROM dbpedia_properties() dbpedia_properties(property, label);
-
-
-ALTER TABLE dbpedia_properties OWNER TO wdbi;
-
---
--- Name: VIEW dbpedia_properties; Type: COMMENT; Schema: sparql; Owner: wdbi
---
-
-COMMENT ON VIEW dbpedia_properties IS 'Compiled with sparql.compile_query() at 2015-12-09T19:31:09Z';
-
 
 --
 -- Name: endpoint; Type: TABLE; Schema: sparql; Owner: sparql; Tablespace: 
@@ -570,70 +329,11 @@ CREATE TABLE namespace (
     uri iri
 );
 
-
-ALTER TABLE namespace OWNER TO sparql;
-
 --
 -- Name: TABLE namespace; Type: COMMENT; Schema: sparql; Owner: sparql
 --
 
 COMMENT ON TABLE namespace IS 'Table of common RDF namespaces';
-
-
---
--- Name: properties; Type: VIEW; Schema: sparql; Owner: sparql
---
-
-CREATE VIEW properties AS
- SELECT properties.pred,
-    properties.label,
-    properties.comment,
-    properties.cardinality,
-    properties.range,
-    properties."isDefinedBy"
-   FROM properties('dbpedia'::name) properties(pred, label, comment, cardinality, range, "isDefinedBy");
-
-
-ALTER TABLE properties OWNER TO sparql;
-
---
--- Name: VIEW properties; Type: COMMENT; Schema: sparql; Owner: sparql
---
-
-COMMENT ON VIEW properties IS 'Compiled with sparql.compile_query()';
-
-
---
--- Name: namespace_js; Type: VIEW; Schema: sparql; Owner: sparql
---
-
-CREATE VIEW namespace_js AS
- SELECT aa.uri,
-    (((((('var '::text || (aa.name)::text) || ' = new RDF.Namespace(
-	'::text) || to_json(aa.uri)) || ',
-	'::text) || aa.json_agg) || ');
-'::text) AS js
-   FROM ( SELECT a.name,
-            a.uri,
-            json_agg(a.ident) AS json_agg
-           FROM ( WITH q AS (
-                         SELECT DISTINCT properties.pred AS p
-                           FROM properties
-                        )
-                 SELECT iri_prefix(q.p) AS uri,
-                    n.name,
-                    iri_ident(q.p) AS ident
-                   FROM (q
-                     LEFT JOIN namespace n ON (((n.uri)::text = iri_prefix(q.p))))) a
-          GROUP BY a.name, a.uri
-          ORDER BY a.name) aa;
-
-
-ALTER TABLE namespace_js OWNER TO sparql;
-
---
--- Data for Name: config; Type: TABLE DATA; Schema: sparql; Owner: sparql
---
 
 COPY config (name, value, regtype, comment) FROM stdin;
 \.
@@ -645,8 +345,6 @@ COPY config (name, value, regtype, comment) FROM stdin;
 
 COPY endpoint (name, url) FROM stdin;
 dbpedia	http://dbpedia.org/sparql/
-ljudmila-dev	http://virtuoso.ljudmila.net:8890/sparql/
-ljudmila-pro	http://sparql.ljudmila.net:8890/sparql/
 geonames	http://www.lotico.com:3030/lotico/sparql
 wikidata	https://query.wikidata.org/bigdata/namespace/wdq/sparql
 \.
@@ -920,9 +618,4 @@ ALTER TABLE ONLY endpoint
 
 ALTER TABLE ONLY namespace
     ADD CONSTRAINT namespace_pkey PRIMARY KEY (name);
-
-
---
--- PostgreSQL database dump complete
---
 
