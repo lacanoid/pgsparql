@@ -9,7 +9,7 @@ Installation
 To build and install this module:
 
     make
-    make install
+    make install installcheck
 
 or selecting a specific PostgreSQL installation:
 
