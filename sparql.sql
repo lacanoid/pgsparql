@@ -68,7 +68,7 @@ COMMENT ON TABLE namespace IS 'Table of common RDF namespaces';
 -- Name: compile_query(name, text, text, name[]); Type: FUNCTION; Schema: sparql; Owner: ziga
 --
 
-CREATE FUNCTION compile_query(endpoint_name name, identifier text, query text, group_by name[] DEFAULT NULL::name[]) RETURNS text
+CREATE OR REPLACE FUNCTION compile_query(endpoint_name name, identifier text, query text, group_by name[] DEFAULT NULL::name[]) RETURNS text
     LANGUAGE plperlu
     AS $_X$
 my ($name,$func,$query,$group_by)=@_;
@@ -142,7 +142,7 @@ my @a = (); my @g = (); my $gb = "";
 if($group_by) {
 	for my $w1 (@$vars) {
 	  if( grep {$w1 eq $_} @$group_by ) { push @a,qq{"$w1"}; push @g,$w1; } 
-	  else { push @a,qq{array_agg(distinct "$w1") as "$w1"}; }
+	  else { push @a,qq{array_agg(distinct "$w1") filter (where "$w1" is not null) as "$w1"}; }
     }
     if(@g) { $gb = " group by ".join(', ', map {qq{"$_"}} @g); }
 } else { @a = ('*'); }
@@ -162,7 +162,7 @@ $_X$;
 -- Name: config(text); Type: FUNCTION; Schema: sparql; Owner: sparql
 --
 
-CREATE FUNCTION config(var text) RETURNS text
+CREATE OR REPLACE FUNCTION config(var text) RETURNS text
     LANGUAGE sql
     AS $_$
 select "value" from sparql.config where "name"=$1;
@@ -178,7 +178,7 @@ COMMENT ON FUNCTION config(var text) IS 'Return configuration setting';
 -- Name: endpoint_url(name); Type: FUNCTION; Schema: sparql; Owner: sparql
 --
 
-CREATE FUNCTION endpoint_url(endpoint_name name) RETURNS text
+CREATE OR REPLACE FUNCTION endpoint_url(endpoint_name name) RETURNS text
     LANGUAGE sql
     AS $_$
 select url from sparql.endpoint where name = $1
@@ -195,7 +195,7 @@ COMMENT ON FUNCTION endpoint_url(endpoint_name name) IS 'Return SPARQL endpoint 
 -- Name: get_properties(name, text); Type: FUNCTION; Schema: sparql; Owner: sparql
 --
 
-CREATE FUNCTION get_properties(endpoint_name name, iri text, OUT predicate text, OUT object text, OUT value text, OUT lang text) RETURNS SETOF record
+CREATE OR REPLACE FUNCTION get_properties(endpoint_name name, iri text, OUT predicate text, OUT object text, OUT value text, OUT lang text) RETURNS SETOF record
     LANGUAGE plperlu STABLE STRICT ROWS 5000
     AS $_$
 use LWP::Simple;
@@ -256,7 +256,7 @@ COMMENT ON FUNCTION get_properties(endpoint_name name, iri text, OUT predicate t
 -- Name: iri_ident(text); Type: FUNCTION; Schema: sparql; Owner: sparql
 --
 
-CREATE FUNCTION iri_ident(text) RETURNS text
+CREATE OR REPLACE FUNCTION iri_ident(text) RETURNS text
     LANGUAGE plperl IMMUTABLE
     AS $_$
   my ($url)=@_;
@@ -268,7 +268,7 @@ $_$;
 -- Name: iri_prefix(text); Type: FUNCTION; Schema: sparql; Owner: sparql
 --
 
-CREATE FUNCTION iri_prefix(text) RETURNS text
+CREATE OR REPLACE FUNCTION iri_prefix(text) RETURNS text
     LANGUAGE plperl IMMUTABLE
     AS $_$
   my ($url)=@_;
@@ -280,7 +280,7 @@ $_$;
 -- Name: properties(name); Type: FUNCTION; Schema: sparql; Owner: sparql
 --
 
-CREATE FUNCTION properties(endpoint_name name, OUT pred text, OUT label text, OUT comment text, OUT cardinality text, OUT range text, OUT "isDefinedBy" text) RETURNS SETOF record
+CREATE OR REPLACE FUNCTION properties(endpoint_name name, OUT pred text, OUT label text, OUT comment text, OUT cardinality text, OUT range text, OUT "isDefinedBy" text) RETURNS SETOF record
     LANGUAGE plperlu COST 5000
     AS $_X$
 use LWP::Simple;

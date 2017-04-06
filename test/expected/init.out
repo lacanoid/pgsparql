@@ -6,7 +6,7 @@ CREATE EXTENSION sparql;
         List of installed extensions
   Name  | Version | Schema |   Description   
 --------+---------+--------+-----------------
- sparql | 0.1     | sparql | SPARQL compiler
+ sparql | 0.2     | sparql | SPARQL compiler
 (1 row)
 
 
