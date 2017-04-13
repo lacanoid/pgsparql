@@ -1,7 +1,7 @@
 PG_CONFIG = pg_config
 PKG_CONFIG = pkg-config
 
-extension_version = 0.2
+extension_version = 0.3
 
 EXTENSION = sparql
 DATA_built = sparql--$(extension_version).sql

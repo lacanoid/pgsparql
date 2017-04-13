@@ -1,7 +1,13 @@
 SPARQL compiler functions  for PostgreSQL
 =======================================
 
-This is an extension for PostgreSQL.
+This is an extension for PostgreSQL. 
+
+It helps one query SPARQL datasources.
+SPARQL queries are compiled into Postgres views, so you can use them nicely in SQL.
+
+It is currently used with Virtuoso, so it is useful with sources like dbpedia.
+It might or might not with other RDF backends.
 
 Installation
 ------------

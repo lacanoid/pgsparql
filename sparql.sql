@@ -14,15 +14,12 @@ CREATE DOMAIN iri AS text;
 -- Name: config; Type: TABLE; Schema: sparql; Owner: sparql; Tablespace: 
 --
 
-CREATE TABLE config (
+CREATE TABLE IF NOT EXISTS config (
     name text NOT NULL,
     value text,
     regtype regtype DEFAULT 'text'::regtype NOT NULL,
     comment text
 );
-
-
-ALTER TABLE config OWNER TO sparql;
 
 --
 -- Name: TABLE config; Type: COMMENT; Schema: sparql; Owner: sparql
@@ -34,13 +31,10 @@ COMMENT ON TABLE config IS 'Various configuration options';
 -- Name: endpoint; Type: TABLE; Schema: sparql; Owner: sparql; Tablespace: 
 --
 
-CREATE TABLE endpoint (
+CREATE TABLE IF NOT EXISTS endpoint (
     name name NOT NULL,
     url text NOT NULL
 );
-
-
-ALTER TABLE endpoint OWNER TO sparql;
 
 --
 -- Name: TABLE endpoint; Type: COMMENT; Schema: sparql; Owner: sparql
@@ -53,8 +47,8 @@ COMMENT ON TABLE endpoint IS 'SPARQL endpoint definitions';
 -- Name: namespace; Type: TABLE; Schema: sparql; Owner: sparql; Tablespace: 
 --
 
-CREATE TABLE namespace (
-    name name NOT NULL,
+CREATE TABLE IF NOT EXISTS namespace (
+    name text NOT NULL,
     uri iri
 );
 
@@ -62,7 +56,11 @@ CREATE TABLE namespace (
 -- Name: TABLE namespace; Type: COMMENT; Schema: sparql; Owner: sparql
 --
 
+ALTER TABLE ONLY namespace ADD PRIMARY KEY (name);
+ALTER TABLE ONLY namespace ADD UNIQUE (uri);
 COMMENT ON TABLE namespace IS 'Table of common RDF namespaces';
+
+
 
 --
 -- Name: compile_query(name, text, text, name[]); Type: FUNCTION; Schema: sparql; Owner: ziga
@@ -158,6 +156,9 @@ return  $ddl;
 
 $_X$;
 
+COMMENT ON FUNCTION compile_query(name,text,text,name[])
+IS 'Compile SPARQL query into a SQL function+view';
+
 --
 -- Name: config(text); Type: FUNCTION; Schema: sparql; Owner: sparql
 --
@@ -195,7 +196,8 @@ COMMENT ON FUNCTION endpoint_url(endpoint_name name) IS 'Return SPARQL endpoint 
 -- Name: get_properties(name, text); Type: FUNCTION; Schema: sparql; Owner: sparql
 --
 
-CREATE OR REPLACE FUNCTION get_properties(endpoint_name name, iri text, OUT predicate text, OUT object text, OUT value text, OUT lang text) RETURNS SETOF record
+CREATE OR REPLACE FUNCTION get_properties(endpoint_name name, iri text, 
+OUT predicate text, OUT label text, OUT object text, OUT value text, OUT lang text, OUT datatype text) RETURNS SETOF record
     LANGUAGE plperlu STABLE STRICT ROWS 5000
     AS $_$
 use LWP::Simple;
@@ -222,11 +224,14 @@ prefix foaf:  <http://xmlns.com/foaf/0.1/>
 
 select distinct 
  (?p as ?predicate), 
+ (?l as ?label), 
  (?o as ?object),
  (coalesce(?lo, ?o) as ?value),
- (lang(?lo) as ?lang)
+ (lang(?lo) as ?lang),
+ (coalesce(datatype(?lo),datatype(?o)) as ?datatype) 
 where {
   $iri ?p ?o.
+  OPTIONAL {?p rdfs:label ?l}.
   OPTIONAL {?o rdfs:label ?lo}.
 }
 order by ?p
@@ -249,12 +254,11 @@ $_$;
 -- Name: FUNCTION get_properties(endpoint_name name, iri text, OUT predicate text, OUT object text, OUT value text, OUT lang text); Type: COMMENT; Schema: sparql; Owner: sparql
 --
 
-COMMENT ON FUNCTION get_properties(endpoint_name name, iri text, OUT predicate text, OUT object text, OUT value text, OUT lang text) IS 'Get properties for RDF resource from SPARQL endpoint';
+COMMENT ON FUNCTION get_properties(endpoint_name name, iri text)
+ IS 'Get properties for RDF resource from SPARQL endpoint';
 
 
---
--- Name: iri_ident(text); Type: FUNCTION; Schema: sparql; Owner: sparql
---
+-- IRI functions
 
 CREATE OR REPLACE FUNCTION iri_ident(text) RETURNS text
     LANGUAGE plperl IMMUTABLE
@@ -263,10 +267,7 @@ CREATE OR REPLACE FUNCTION iri_ident(text) RETURNS text
   if($url=~s!([/#])([_\-a-zA-Z0-9]+)$!$1!) { return $2; }
   return undef;
 $_$;
-
---
--- Name: iri_prefix(text); Type: FUNCTION; Schema: sparql; Owner: sparql
---
+COMMENT ON FUNCTION iri_ident(text) IS 'Get identifier part of IRI';
 
 CREATE OR REPLACE FUNCTION iri_prefix(text) RETURNS text
     LANGUAGE plperl IMMUTABLE
@@ -275,13 +276,21 @@ CREATE OR REPLACE FUNCTION iri_prefix(text) RETURNS text
   if($url=~s!([/#])([_\-a-zA-Z0-9]+)$!$1!) { return $url; }
   return undef;
 $_$;
+COMMENT ON FUNCTION iri_prefix(text) IS 'Get namespace prefix part of IRI';
+
+CREATE OR REPLACE FUNCTION iri_ns(text) RETURNS text
+    LANGUAGE sql IMMUTABLE
+    AS $_$
+ select name from sparql.namespace where uri = sparql.iri_prefix($1)
+$_$;
+COMMENT ON FUNCTION iri_ns(text) IS 'Get abbreviated namespace for IRI';
 
 --
 -- Name: properties(name); Type: FUNCTION; Schema: sparql; Owner: sparql
 --
 
-CREATE OR REPLACE FUNCTION properties(endpoint_name name, OUT pred text, OUT label text, OUT comment text, OUT cardinality text, OUT range text, OUT "isDefinedBy" text) RETURNS SETOF record
-    LANGUAGE plperlu COST 5000
+CREATE OR REPLACE FUNCTION list_properties(endpoint_name name, OUT pred text, OUT label text, OUT comment text, OUT cardinality text, OUT range text, OUT "isDefinedBy" text) RETURNS SETOF record
+    LANGUAGE plperlu COST 10000
     AS $_X$
 use LWP::Simple;
 use URI::Escape;
@@ -331,7 +340,8 @@ $_X$;
 -- Name: FUNCTION properties(endpoint_name name, OUT pred text, OUT label text, OUT comment text, OUT cardinality text, OUT range text, OUT "isDefinedBy" text); Type: COMMENT; Schema: sparql; Owner: sparql
 --
 
-COMMENT ON FUNCTION properties(endpoint_name name, OUT pred text, OUT label text, OUT comment text, OUT cardinality text, OUT range text, OUT "isDefinedBy" text) IS 'Compiled with sparql.compile_query()';
+COMMENT ON FUNCTION list_properties(endpoint_name name)
+IS 'Get a list of all properties from a SPARQL endpoint';
 
 SET default_with_oids = false;
 
@@ -339,9 +349,11 @@ SET default_with_oids = false;
 -- Data for Name: endpoint; Type: TABLE DATA; Schema: sparql; Owner: sparql
 --
 
-INSERT INTO endpoint VALUES ('dbpedia', 'http://dbpedia.org/sparql/');
-INSERT INTO endpoint VALUES ('geonames', 'http://www.lotico.com:3030/lotico/sparql');
-INSERT INTO endpoint VALUES ('wikidata', 'https://query.wikidata.org/bigdata/namespace/wdq/sparql');
+INSERT INTO endpoint VALUES ('localhost', 'http://localhost:8890/sparql/');
+INSERT INTO endpoint VALUES ('virtuoso',  'http://localhost:8890/sparql/');
+INSERT INTO endpoint VALUES ('dbpedia',   'http://dbpedia.org/sparql/');
+INSERT INTO endpoint VALUES ('geonames',  'http://www.lotico.com:3030/lotico/sparql');
+INSERT INTO endpoint VALUES ('wikidata',  'https://query.wikidata.org/bigdata/namespace/wdq/sparql');
 
 --
 -- Data for Name: namespace; Type: TABLE DATA; Schema: sparql; Owner: sparql
@@ -558,6 +570,8 @@ INSERT INTO namespace VALUES ('xlink', 'http://www.w3.org/1999/xlink/');
 INSERT INTO namespace VALUES ('xml', 'http://www.w3.org/XML/1998/namespace');
 INSERT INTO namespace VALUES ('xsd', 'http://www.w3.org/2001/XMLSchema#');
 INSERT INTO namespace VALUES ('dbpedia', 'http://dbpedia.org/property/');
+INSERT INTO namespace VALUES ('dbo', 'http://dbpedia.org/ontology/');
+INSERT INTO namespace VALUES ('prov', 'http://www.w3.org/ns/prov#');
 INSERT INTO namespace VALUES ('vcard', 'http://www.w3.org/2006/vcard/ns#');
 INSERT INTO namespace VALUES ('ical', 'http://www.w3.org/2002/12/cal/icaltzd#');
 INSERT INTO namespace VALUES ('m3c', 'http://www.m3c.si/xmlns/m3c/2006-06#');
@@ -601,12 +615,4 @@ ALTER TABLE ONLY config
 
 ALTER TABLE ONLY endpoint
     ADD CONSTRAINT endpoint_pkey PRIMARY KEY (name);
-
-
---
--- Name: namespace_pkey; Type: CONSTRAINT; Schema: sparql; Owner: sparql; Tablespace: 
---
-
-ALTER TABLE ONLY namespace
-    ADD CONSTRAINT namespace_pkey PRIMARY KEY (name);
 
