@@ -49,7 +49,7 @@ COMMENT ON TABLE endpoint IS 'SPARQL endpoint definitions';
 
 CREATE TABLE IF NOT EXISTS namespace (
     name text NOT NULL,
-    uri iri
+    uri iri NOT NULL
 );
 
 --
@@ -418,6 +418,7 @@ INSERT INTO namespace VALUES ('eg', 'http://example.org/');
 INSERT INTO namespace VALUES ('enc', 'http://purl.oclc.org/net/rss_2.0/enc#');
 INSERT INTO namespace VALUES ('ent', 'http://jena.hpl.hp.com/ENT/1.0/#');
 INSERT INTO namespace VALUES ('eor', 'http://dublincore.org/2000/03/13/eor#');
+INSERT INTO namespace VALUES ('ese', 'http://www.europeana.eu/schemas/ese/');
 INSERT INTO namespace VALUES ('ethan', 'http://spire.umbc.edu/ontologies/ethan.owl#');
 INSERT INTO namespace VALUES ('ev', 'http://purl.org/rss/1.0/modules/event/');
 INSERT INTO namespace VALUES ('event', 'http://ebiquity.umbc.edu/ontology/event.owl#');
