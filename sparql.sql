@@ -353,7 +353,7 @@ INSERT INTO endpoint VALUES ('localhost', 'http://localhost:8890/sparql/');
 INSERT INTO endpoint VALUES ('virtuoso',  'http://localhost:8890/sparql/');
 INSERT INTO endpoint VALUES ('dbpedia',   'http://dbpedia.org/sparql/');
 INSERT INTO endpoint VALUES ('geonames',  'http://www.lotico.com:3030/lotico/sparql');
-INSERT INTO endpoint VALUES ('wikidata',  'https://query.wikidata.org/bigdata/namespace/wdq/sparql');
+INSERT INTO endpoint VALUES ('wikidata',  'https://query.wikidata.org/sparql');
 
 --
 -- Data for Name: namespace; Type: TABLE DATA; Schema: sparql; Owner: sparql
