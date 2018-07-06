@@ -223,11 +223,11 @@ prefix dc:    <http://purl.org/dc/elements/1.1/>
 prefix foaf:  <http://xmlns.com/foaf/0.1/>
 
 select distinct 
- (?p as ?predicate), 
- (?l as ?label), 
- (?o as ?object),
- (coalesce(?lo, ?o) as ?value),
- (lang(?lo) as ?lang),
+ (?p as ?predicate) 
+ (?l as ?label) 
+ (?o as ?object)
+ (coalesce(?lo, ?o) as ?value)
+ (lang(?lo) as ?lang)
  (coalesce(datatype(?lo),datatype(?o)) as ?datatype) 
 where {
   $iri ?p ?o.
