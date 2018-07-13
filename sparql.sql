@@ -308,7 +308,7 @@ my $extras="?debug=on&timeout=&save=display&fname=".
 	   "&query=";
 	   
 my $query = <<"SPARQL";
-select distinct ?pred, ?label, ?comment, ?cardinality, ?range, ?isDefinedBy
+select distinct ?pred ?label ?comment ?cardinality ?range ?isDefinedBy
 WHERE {
   ?pred a rdf:Property.
   ?pred rdfs:label ?label.
