@@ -15,12 +15,17 @@ Installation
 To build and install this module:
 
     make
+    make install
     make install installcheck
 
 or selecting a specific PostgreSQL installation:
 
     make PG_CONFIG=/some/where/bin/pg_config
     make PG_CONFIG=/some/where/bin/pg_config install
+    make PG_CONFIG=/some/where/bin/pg_config installcheck
+    make PGPORT=5432 PG_CONFIG=/usr/lib/postgresql/10/bin/pg_config clean install installcheck
+
+Make sure you set the connection parameters like PGPORT right for testing.
 
 And finally inside the database:
 
@@ -34,4 +39,10 @@ Get data on a particular dbpedia resource:
 ```sql
 SELECT * 
   FROM sparql.get_properties('dbpedia','http://dbpedia.org/resource/Johann_Sebastian_Bach')
+
+SELECT * 
+  FROM sparql.get_references('dbpedia','http://dbpedia.org/resource/Johann_Sebastian_Bach')
+
+SELECT sparql.compile_query(endpoint,identifier,sparql_query);
+$$);
 ```

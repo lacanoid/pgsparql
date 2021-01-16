@@ -6,7 +6,7 @@ CREATE EXTENSION sparql;
         List of installed extensions
   Name  | Version | Schema |   Description   
 --------+---------+--------+-----------------
- sparql | 0.3     | sparql | SPARQL compiler
+ sparql | 0.4     | sparql | SPARQL compiler
 (1 row)
 
 
@@ -18,6 +18,7 @@ CREATE EXTENSION sparql;
  function config(text)
  function endpoint_url(name)
  function get_properties(name,text)
+ function get_references(name,text)
  function iri_ident(text)
  function iri_ns(text)
  function iri_prefix(text)
@@ -26,6 +27,6 @@ CREATE EXTENSION sparql;
  table endpoint
  table namespace
  type iri
-(12 rows)
+(13 rows)
 
 
