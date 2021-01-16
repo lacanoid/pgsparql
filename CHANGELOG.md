@@ -1,3 +1,6 @@
+version 0.4
+- added get_references() function
+
 version 0.3
 - get_properties() function improvements
 - list_properties() now lists all properies from an endpoint
