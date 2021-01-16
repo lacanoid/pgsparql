@@ -4,7 +4,10 @@ PKG_CONFIG = pkg-config
 extension_version = 0.4
 
 EXTENSION = sparql
-DATA_built = sparql--$(extension_version).sql
+PGFILEDESC = "sparql - SPARQL compiler"
+
+DATA = $(EXTENSION)--0.3.sql $(EXTENSION)--0.3--0.4.sql 
+DATA_built = $(EXTENSION)--$(extension_version).sql
 
 REGRESS = init test
 REGRESS_OPTS = --inputdir=test
@@ -12,5 +15,6 @@ REGRESS_OPTS = --inputdir=test
 PGXS := $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)
 
-sparql--$(extension_version).sql: sparql.sql
+$(EXTENSION)--$(extension_version).sql: $(EXTENSION).sql
 	cat $^ >$@
+
