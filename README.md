@@ -65,10 +65,12 @@ Parameters:
 for example:
 
 ```sql
-SELECT sparql.compile_query('dbpedia','bach',$$
+SELECT sparql.compile_query('dbpedia','ludwig_van',$$
 select ?predicate, ?object
 where {
- <http://dbpedia.org/resource/Johann_Sebastian_Bach> ?predicate ?object.
+ <http://dbpedia.org/resource/Ludwig_van_Beethoven> ?predicate ?object.
 }
 $$,'{predicate}');
+
+SELECT * from ludwig_van;
 ```
