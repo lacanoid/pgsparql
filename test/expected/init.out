@@ -1,19 +1,13 @@
 CREATE EXTENSION plperl;
 CREATE EXTENSION plperlu;
 CREATE EXTENSION sparql;
+\pset tuples_only
 
 \dx sparql
-        List of installed extensions
-  Name  | Version | Schema |   Description   
---------+---------+--------+-----------------
  sparql | 0.4     | sparql | SPARQL compiler
-(1 row)
 
 
 \dx+ sparql
-         Objects in extension "sparql"
-              Object Description               
------------------------------------------------
  function compile_query(name,text,text,name[])
  function config(text)
  function endpoint_url(name)
@@ -27,6 +21,5 @@ CREATE EXTENSION sparql;
  table endpoint
  table namespace
  type iri
-(13 rows)
 
 
