@@ -1,11 +1,12 @@
 version 0.4
 - added get_references() function
+- removed dependancy on DateTime perl module in compile_query()
+- iri_crunch() function added
 
 version 0.3
 - get_properties() function improvements
 - list_properties() now lists all properies from an endpoint
 - iri_ns() function added
-
 
 version 0.2
 - remove nulls from groupings

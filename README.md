@@ -27,8 +27,6 @@ or selecting a specific PostgreSQL installation:
 
 Make sure you set the connection parameters like PGPORT right for testing.
 
-To pass tests DateTime Perl module is needed. On Debian: `apt install libdatetime-perl`
-
 And finally inside the database:
 
     CREATE EXTENSION sparql;
@@ -56,3 +54,21 @@ SPARQL endpoint is queried to determine the result format of the specified query
 Then function `identitier`() and view `identifier` are created.
 Created function queries any SPARQL endpoint and returns result as SQL table.
 Created view is just a convenience layer over created function.
+Once created, these can be further manualy modified for extra functionality.
+
+Parameters:
++ `endpoint` - default SPARQL endpoint. 
++ `identifier` - SQL identifier of created function and view, with or without schema
++ `sparql_query` - SPARQL query to run
++ `grouping` - array of identifiers to group by. Grouping is done in a view. When grouping, distinct values of non-grouped columns are aggregated into arrays.
+
+for example:
+
+```sql
+SELECT sparql.compile_query('dbpedia','bach',$$
+select ?predicate, ?object
+where {
+ <http://dbpedia.org/resource/Johann_Sebastian_Bach> ?predicate ?object.
+}
+$$,'{predicate}');
+```

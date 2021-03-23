@@ -14,10 +14,12 @@ $$,'{predicate}'),1,31) as magick
 with q as (
  values 
   ('http://purl.org/dc/elements/1.1/creator'),
-  ('http://www.w3.org/2000/10/swap/pim/exif#apperture') 
+  ('http://www.w3.org/2000/10/swap/pim/exif#apperture'),
+  ('http://krneki.org/id') 
 )
 select sparql.iri_ident(column1) as ident,
        sparql.iri_prefix(column1) as prefix,
-       sparql.iri_ns(column1) as ns
+       sparql.iri_ns(column1) as ns,
+       sparql.iri_crunch(column1) as crunch
   from q
 ;

@@ -73,15 +73,14 @@ CREATE OR REPLACE FUNCTION compile_query(endpoint_name name, identifier text, qu
 my ($name,$func,$query,$group_by)=@_;
 use LWP::Simple;
 use URI::Escape;
-use DateTime;
 use JSON;
 
-my $now = DateTime->now()->iso8601().'Z';
-my $p=spi_prepare('select sparql.endpoint_url($1)','name');
+my $p=spi_prepare('select sparql.endpoint_url($1),now()','name');
 my $baseUrl = spi_exec_prepared($p,$name)->{rows}->[0];
 unless($baseUrl) {
   elog(ERROR,'No endpoint definition in sparql.endpoint for name "'.$name.'"');
 }
+my $now = $baseUrl->{now};
 $baseUrl = $baseUrl->{endpoint_url};
 my $extras ="?debug=on&timeout=&save=display&fname=".
 	    "&format=".uri_escape("application/sparql-results+json").
@@ -134,7 +133,7 @@ try { my $data = decode_json($json);
   elog(ERROR,"SPARQL ENDPOINT FAILURE\n$_");
 }
 '.'$sparql$'." language plperlu cost 5000;
-comment on function $func(name) is 'Compiled with sparql.compile_query() at $now';
+comment on function $func(name) is 'Compiled with sparql.compile_query() on $now';
 ";
 
 my @a = (); my @g = (); my $gb = "";
@@ -148,7 +147,7 @@ if($group_by) {
 
 my $ddl2 = "
 create or replace view ${func} as select ".join(', ',@a)." from $func()$gb;
-comment on view ${func} is 'Compiled with sparql.compile_query() at $now';
+comment on view ${func} is 'Compiled with sparql.compile_query() on $now';
 ";
 
 my $ddl = $ddl1.$ddl2;
@@ -319,7 +318,7 @@ COMMENT ON FUNCTION get_references(endpoint_name name, iri text)
 -- IRI functions
 
 CREATE OR REPLACE FUNCTION iri_ident(text) RETURNS text
-    LANGUAGE plperl IMMUTABLE
+    LANGUAGE plperl IMMUTABLE strict
     AS $_$
   my ($url)=@_;
   if($url=~s!([/#])([_\-a-zA-Z0-9]+)$!$1!) { return $2; }
@@ -328,7 +327,7 @@ $_$;
 COMMENT ON FUNCTION iri_ident(text) IS 'Get identifier part of IRI';
 
 CREATE OR REPLACE FUNCTION iri_prefix(text) RETURNS text
-    LANGUAGE plperl IMMUTABLE
+    LANGUAGE plperl IMMUTABLE strict
     AS $_$
   my ($url)=@_;
   if($url=~s!([/#])([_\-a-zA-Z0-9]+)$!$1!) { return $url; }
@@ -337,11 +336,19 @@ $_$;
 COMMENT ON FUNCTION iri_prefix(text) IS 'Get namespace prefix part of IRI';
 
 CREATE OR REPLACE FUNCTION iri_ns(text) RETURNS text
-    LANGUAGE sql IMMUTABLE
+    LANGUAGE sql IMMUTABLE strict
     AS $_$
  select name from sparql.namespace where uri = sparql.iri_prefix($1)
 $_$;
 COMMENT ON FUNCTION iri_ns(text) IS 'Get abbreviated namespace for IRI';
+
+CREATE OR REPLACE FUNCTION iri_crunch(text) RETURNS text
+    LANGUAGE sql IMMUTABLE strict
+    AS $_$
+ select coalesce(iri_ns||':'||iri_ident, $1)
+ from ( select sparql.iri_ns($1),sparql.iri_ident($1) ) as iri
+$_$;
+COMMENT ON FUNCTION iri_crunch(text) IS 'Get abbreviated IRI (with namespace)';
 
 --
 -- Name: properties(name); Type: FUNCTION; Schema: sparql; Owner: sparql
