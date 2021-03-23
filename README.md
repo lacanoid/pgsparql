@@ -47,20 +47,20 @@ SELECT *
 To compile a SPARQL query into SQL function + view:
 
 ```sql
-SELECT sparql.compile_query(endpoint,identifier,sparql_query[,grouping]);
+SELECT sparql.compile_query(endpoint, identifier, sparql_query[, grouping]);
 ```
 
 SPARQL endpoint is queried to determine the result format of the specified query.
 Then function `identitier`() and view `identifier` are created.
 Created function queries any SPARQL endpoint and returns result as SQL table.
 Created view is just a convenience layer over created function.
-Once created, these can be further manualy modified for extra functionality.
+Once created, these can be further tweaked manualy for extra functionality.
 
 Parameters:
 + `endpoint` - default SPARQL endpoint. 
-+ `identifier` - SQL identifier of created function and view, with or without schema
++ `identifier` - SQL identifier of function and view to be created, with or without schema
 + `sparql_query` - SPARQL query to run
-+ `grouping` - array of identifiers to group by. Grouping is done in a view. When grouping, distinct values of non-grouped columns are aggregated into arrays.
++ `grouping` - optional array of identifiers to group by. Grouping is done in a view. When grouping, distinct values of non-grouped columns are aggregated into arrays.
 
 for example:
 
