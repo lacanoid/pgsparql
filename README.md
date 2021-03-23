@@ -16,7 +16,7 @@ To build and install this module:
 
     make
     make install
-    make install installcheck
+    make clean install installcheck
 
 or selecting a specific PostgreSQL installation:
 
@@ -27,7 +27,7 @@ or selecting a specific PostgreSQL installation:
 
 Make sure you set the connection parameters like PGPORT right for testing.
 
-This requires DateTime Perl module. On debian: `apt install libdatetime-perl`
+To pass tests DateTime Perl module is needed. On Debian: `apt install libdatetime-perl`
 
 And finally inside the database:
 
@@ -44,14 +44,12 @@ SELECT *
 
 SELECT * 
   FROM sparql.get_references('dbpedia','http://dbpedia.org/resource/Johann_Sebastian_Bach')
-$$);
 ```
 
 To compile a SPARQL query into SQL function + view:
 
 ```sql
 SELECT sparql.compile_query(endpoint,identifier,sparql_query[,grouping]);
-$$);
 ```
 
 SPARQL endpoint is queried to determine the result format of the specified query.
