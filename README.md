@@ -40,10 +40,10 @@ Get data on a particular dbpedia resource:
 
 ```sql
 SELECT * 
-  FROM sparql.get_properties('dbpedia','http://dbpedia.org/resource/Johann_Sebastian_Bach')
+  FROM sparql.get_properties('dbpedia','http://dbpedia.org/resource/Johann_Sebastian_Bach');
 
 SELECT * 
-  FROM sparql.get_references('dbpedia','http://dbpedia.org/resource/Johann_Sebastian_Bach')
+  FROM sparql.get_references('dbpedia','http://dbpedia.org/resource/Johann_Sebastian_Bach');
 ```
 
 To compile a SPARQL query into SQL function + view:
