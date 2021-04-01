@@ -57,4 +57,18 @@ $function$
 COMMENT ON FUNCTION get_references(endpoint_name name, iri text)
  IS 'Get properties for RDF resource from SPARQL endpoint';
 
+CREATE OR REPLACE FUNCTION iri_crunch(text) RETURNS text
+    LANGUAGE sql IMMUTABLE strict
+    AS $_$
+ select coalesce(iri_ns||':'||iri_ident, $1)
+ from ( select sparql.iri_ns($1),sparql.iri_ident($1) ) as iri
+$_$;
+COMMENT ON FUNCTION iri_crunch(text) IS 'Get abbreviated IRI (with namespace)';
+
 INSERT INTO namespace VALUES ('schema', 'http://schema.org/');
+INSERT INTO namespace VALUES ('edm', 'http://www.europeana.eu/schemas/edm/');
+INSERT INTO namespace VALUES ('xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+INSERT INTO namespace VALUES ('oai', 'http://www.openarchives.org/OAI/2.0/');
+INSERT INTO namespace VALUES ('oai_dc', 'http://www.openarchives.org/OAI/2.0/oai_dc/');
+INSERT INTO namespace VALUES ('ore', 'http://www.openarchives.org/ore/terms/');
+INSERT INTO namespace VALUES ('dcat', 'http://www.w3.org/tr/vocab-dcat/');
