@@ -1,3 +1,5 @@
+SET search_path = sparql, pg_catalog;
+
 CREATE OR REPLACE FUNCTION sparql.get_references(endpoint_name name, iri text, out subject text, OUT predicate text, out label text,out lang text)
  RETURNS SETOF record
   LANGUAGE plperlu
@@ -54,3 +56,5 @@ $function$
 
 COMMENT ON FUNCTION get_references(endpoint_name name, iri text)
  IS 'Get properties for RDF resource from SPARQL endpoint';
+
+INSERT INTO namespace VALUES ('schema', 'http://schema.org/');
