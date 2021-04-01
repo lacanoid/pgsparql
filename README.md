@@ -51,7 +51,7 @@ SELECT sparql.compile_query(endpoint, identifier, sparql_query[, grouping]);
 ```
 
 SPARQL endpoint is queried to determine the result format of the specified query.
-Then function `identitier`() and view `identifier` are created.
+Then function `identitier()` and view `identifier` are created.
 Created function queries any SPARQL endpoint and returns result as SQL table.
 Created view is just a convenience layer over created function.
 Once created, these can be further tweaked manualy for extra functionality.
