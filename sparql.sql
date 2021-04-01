@@ -587,6 +587,7 @@ INSERT INTO namespace VALUES ('rs', 'http://www.w3.org/2001/sw/DataAccess/tests/
 INSERT INTO namespace VALUES ('rss2', 'http://backend.userland.com/RSS2#');
 INSERT INTO namespace VALUES ('rss1', 'http://purl.org/rss/1.0/');
 INSERT INTO namespace VALUES ('s', 'http://snipsnap.org/rdf/snip-schema#');
+INSERT INTO namespace VALUES ('schema', 'http://schema.org/');
 INSERT INTO namespace VALUES ('schemaweb', 'http://www.schemaweb.info/schemas/meta/rdf/');
 INSERT INTO namespace VALUES ('s0', 'http://www.w3.org/2000/PhotoRDF/dc-1-0#');
 INSERT INTO namespace VALUES ('s1', 'http://sophia.inria.fr/~enerbonn/rdfpiclang#');
