@@ -5,6 +5,7 @@ version 0.4
 - added 'schema' [http://schema.org/]  namespace
 - added openarchives.org namespaces 'oai','ore','oai_dc' 
 - added other wanted namespaces: 'xsi', 'dcat'
+  added .travis.yml
 
 version 0.3
 - get_properties() function improvements
