@@ -14,7 +14,7 @@ Installation
 
 Install appropriate Perl packages
 
-    apt-get install libwww-perl libtry-tiny-perl
+    apt install libwww-perl libtry-tiny-perl
 
 To build and install this module:
 
