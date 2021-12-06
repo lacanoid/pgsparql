@@ -12,6 +12,10 @@ It might or might not with other RDF backends.
 Installation
 ------------
 
+Install appropriate Perl packages
+
+    apt-get install libwww-perl libtry-tiny-perl
+
 To build and install this module:
 
     make
