@@ -7,7 +7,7 @@ It helps one query SPARQL datasources.
 SPARQL queries are compiled into Postgres views, so you can use them nicely in SQL.
 
 It is currently used with Virtuoso, so it is useful with sources like dbpedia.
-It might or might not with other RDF backends.
+It might or might not work with other RDF backends.
 
 Installation
 ------------
@@ -54,10 +54,10 @@ To compile a SPARQL query into SQL function + view:
 SELECT sparql.compile_query(endpoint, identifier, sparql_query[, grouping]);
 ```
 
-SPARQL endpoint is queried to determine the result format of the specified query.
+SPARQL endpoint is queried to determine the result format for the specified query.
 Then function `identitier()` and view `identifier` are created.
 Created function queries any SPARQL endpoint and returns result as SQL table.
-Created view is just a convenience layer over created function.
+Created view is just a convenience layer over the created function.
 Once created, these can be further tweaked manualy for extra functionality.
 
 Parameters:
