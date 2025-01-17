@@ -1,0 +1,8 @@
+select * 
+  from sparql.get_properties('dbpedia','http://dbpedia.org/resource/Johann_Sebastian_Bach')
+ where predicate='http://dbpedia.org/ontology/birthYear';
+               predicate               | object | value | lang |                datatype                
+---------------------------------------+--------+-------+------+----------------------------------------
+ http://dbpedia.org/ontology/birthYear | 1685   | 1685  |      | http://www.w3.org/2001/XMLSchema#gYear
+(1 row)
+

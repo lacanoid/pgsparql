@@ -22,5 +22,6 @@ testall.sh:
 	pg_lsclusters -h | perl -ne '@_=split("\\s+",$$_); print "make PGPORT=$$_[2] PG_CONFIG=/usr/lib/postgresql/$$_[0]/bin/pg_config clean install installcheck\n";' > testall.sh
 
 build: testall.sh
+build:
 	tail -1 testall.sh | sh
 
