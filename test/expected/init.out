@@ -4,6 +4,6 @@ CREATE EXTENSION sparql;
 \pset tuples_only
 
 \dx sparql
- sparql | 0.4     | sparql | SPARQL compiler
+ sparql | 1.0     | sparql | SPARQL compiler
 
 

@@ -197,7 +197,7 @@ COMMENT ON FUNCTION endpoint_url(endpoint_name name) IS 'Return SPARQL endpoint 
 --
 
 CREATE OR REPLACE FUNCTION get_properties(endpoint_name name, iri text, 
-OUT predicate text, OUT label text, OUT object text, OUT value text, OUT lang text, OUT datatype text) RETURNS SETOF record
+OUT predicate text, OUT object text, OUT value text, OUT lang text, OUT datatype text) RETURNS SETOF record
     LANGUAGE plperlu STABLE STRICT ROWS 5000
     AS $_$
 use LWP::Simple;
@@ -224,14 +224,12 @@ prefix foaf:  <http://xmlns.com/foaf/0.1/>
 
 select distinct 
  (?p as ?predicate) 
- (?l as ?label) 
  (?o as ?object)
  (coalesce(?lo, ?o) as ?value)
  (lang(?lo) as ?lang)
  (coalesce(datatype(?lo),datatype(?o)) as ?datatype) 
 where {
   $iri ?p ?o.
-  OPTIONAL {?p rdfs:label ?l}.
   OPTIONAL {?o rdfs:label ?lo}.
 }
 order by ?p

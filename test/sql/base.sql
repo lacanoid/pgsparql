@@ -9,7 +9,7 @@ where {
 }
 $$,'{predicate}'),1,31) as magick
 ;
--- select * from bach
+select * from bach where predicate='http://dbpedia.org/ontology/birthYear';
 ;
 with q as (
  values 
