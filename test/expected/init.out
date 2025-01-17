@@ -7,20 +7,3 @@ CREATE EXTENSION sparql;
  sparql | 0.4     | sparql | SPARQL compiler
 
 
-\dx+ sparql
- function compile_query(name,text,text,name[])
- function config(text)
- function endpoint_url(name)
- function get_properties(name,text)
- function get_references(name,text)
- function iri_crunch(text)
- function iri_ident(text)
- function iri_ns(text)
- function iri_prefix(text)
- function list_properties(name)
- table config
- table endpoint
- table namespace
- type iri
-
-

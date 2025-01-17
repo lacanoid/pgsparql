@@ -5,5 +5,3 @@ CREATE EXTENSION sparql;
 
 \dx sparql
 
-\dx+ sparql
-
