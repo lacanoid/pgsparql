@@ -1,3 +1,7 @@
+version 1.0
+- added 'results' namespace
+- removed label from `get_properties()`
+
 version 0.4
 - added get_references() function
 - removed dependancy on DateTime perl module in compile_query()

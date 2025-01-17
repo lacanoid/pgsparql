@@ -1,0 +1,9 @@
+make PGPORT=5439 PG_CONFIG=/usr/lib/postgresql/9.6/bin/pg_config clean install installcheck
+make PGPORT=5433 PG_CONFIG=/usr/lib/postgresql/10/bin/pg_config clean install installcheck
+make PGPORT=5438 PG_CONFIG=/usr/lib/postgresql/11/bin/pg_config clean install installcheck
+make PGPORT=5437 PG_CONFIG=/usr/lib/postgresql/12/bin/pg_config clean install installcheck
+make PGPORT=5434 PG_CONFIG=/usr/lib/postgresql/13/bin/pg_config clean install installcheck
+make PGPORT=5435 PG_CONFIG=/usr/lib/postgresql/14/bin/pg_config clean install installcheck
+make PGPORT=5432 PG_CONFIG=/usr/lib/postgresql/15/bin/pg_config clean install installcheck
+make PGPORT=5436 PG_CONFIG=/usr/lib/postgresql/16/bin/pg_config clean install installcheck
+make PGPORT=5440 PG_CONFIG=/usr/lib/postgresql/17/bin/pg_config clean install installcheck

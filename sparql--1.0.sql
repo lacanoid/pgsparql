@@ -419,33 +419,8 @@ INSERT INTO endpoint VALUES ('geonames',  'http://www.lotico.com:3030/lotico/spa
 INSERT INTO endpoint VALUES ('wikidata',  'https://query.wikidata.org/sparql');
 
 --
--- Data for Name: endpoint; Type: TABLE DATA; Schema: sparql; Owner: sparql
---
-
-INSERT INTO endpoint VALUES ('localhost', 'http://localhost:8890/sparql/');
-INSERT INTO endpoint VALUES ('virtuoso',  'http://localhost:8890/sparql/');
-INSERT INTO endpoint VALUES ('dbpedia',   'http://dbpedia.org/sparql/');
-INSERT INTO endpoint VALUES ('geonames',  'http://www.lotico.com:3030/lotico/sparql');
-INSERT INTO endpoint VALUES ('wikidata',  'https://query.wikidata.org/sparql');
-
---
 -- Data for Name: namespace; Type: TABLE DATA; Schema: sparql; Owner: sparql
 --
-
-INSERT INTO namespace VALUES ('xml', 'http://www.w3.org/XML/1998/namespace');
-INSERT INTO namespace VALUES ('xsd', 'http://www.w3.org/2001/XMLSchema#');
-INSERT INTO namespace VALUES ('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
-INSERT INTO namespace VALUES ('rdfs', 'http://www.w3.org/2000/01/rdf-schema#');
-INSERT INTO namespace VALUES ('xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-INSERT INTO namespace VALUES ('owl', 'http://www.w3.org/2002/07/owl#');
-INSERT INTO namespace VALUES ('schema', 'http://schema.org/');
-INSERT INTO namespace VALUES ('dc', 'http://purl.org/dc/elements/1.1/');
-INSERT INTO namespace VALUES ('dcterms', 'http://purl.org/dc/terms/');
-INSERT INTO namespace VALUES ('skos', 'http://www.w3.org/2004/02/skos/core#');
-INSERT INTO namespace VALUES ('xhtml', 'http://www.w3.org/1999/xhtml');
-INSERT INTO namespace VALUES ('xlink', 'http://www.w3.org/1999/xlink/');
-
--- more obscure items
 
 INSERT INTO namespace VALUES ('NC', 'http://home.netscape.com/NC-rdf#');
 INSERT INTO namespace VALUES ('NS0', 'http://www.daml.org/2002/02/telephone/1/areacodes-ont#');
@@ -491,9 +466,11 @@ INSERT INTO namespace VALUES ('cyc', 'http://opencyc.sourceforge.net/daml/cyc.da
 INSERT INTO namespace VALUES ('daml2', 'http://www.daml.org/2000/10/daml-ont#');
 INSERT INTO namespace VALUES ('date', 'java:java.util.Date');
 INSERT INTO namespace VALUES ('dc10', 'http://purl.org/dc/elements/1.0/');
+INSERT INTO namespace VALUES ('dc', 'http://purl.org/dc/elements/1.1/');
 INSERT INTO namespace VALUES ('dcq1', 'http://dublincore.org/2000/03/13/dcq#');
 INSERT INTO namespace VALUES ('dcq', 'http://purl.org/dc/qualifiers/1.0/');
 INSERT INTO namespace VALUES ('dct', 'http://dublincore.org/2000/03/13-dctype');
+INSERT INTO namespace VALUES ('dcterms', 'http://purl.org/dc/terms/');
 INSERT INTO namespace VALUES ('dctype1', 'http://dublincore.org/2003/12/08/dctype#');
 INSERT INTO namespace VALUES ('dctype', 'http://purl.org/dc/dcmitype/');
 INSERT INTO namespace VALUES ('doap2', 'http://usefulinc.com/ns/doap/#');
@@ -506,6 +483,7 @@ INSERT INTO namespace VALUES ('ent', 'http://jena.hpl.hp.com/ENT/1.0/#');
 INSERT INTO namespace VALUES ('eor', 'http://dublincore.org/2000/03/13/eor#');
 INSERT INTO namespace VALUES ('ese', 'http://www.europeana.eu/schemas/ese/');
 INSERT INTO namespace VALUES ('edm', 'http://www.europeana.eu/schemas/edm/');
+INSERT INTO namespace VALUES ('xsi', 'http://www.w3.org/2001/XMLSchema-instance');
 INSERT INTO namespace VALUES ('oai', 'http://www.openarchives.org/OAI/2.0/');
 INSERT INTO namespace VALUES ('oai_dc', 'http://www.openarchives.org/OAI/2.0/oai_dc/');
 INSERT INTO namespace VALUES ('ore', 'http://www.openarchives.org/ore/terms/');
@@ -580,6 +558,7 @@ INSERT INTO namespace VALUES ('ontosem', 'http://morpheus.cs.umbc.edu/aks1/ontos
 INSERT INTO namespace VALUES ('ontoware', 'http://swrc.ontoware.org/ontology/ontoware#');
 INSERT INTO namespace VALUES ('org', 'http://www.w3.org/2001/04/roadmap/org#');
 INSERT INTO namespace VALUES ('os', 'http://downlode.org/rdf/os/0.1/');
+INSERT INTO namespace VALUES ('owl', 'http://www.w3.org/2002/07/owl#');
 INSERT INTO namespace VALUES ('p', 'http://www.usefulinc.com/picdiary/');
 INSERT INTO namespace VALUES ('p0', 'http://eulersharp.sourceforge.net/2003/03swap/xsd-rules#');
 INSERT INTO namespace VALUES ('p1', 'http://eulersharp.sourceforge.net/2003/03swap/rdfs-rules#');
@@ -599,6 +578,8 @@ INSERT INTO namespace VALUES ('q', 'http://www.w3.org/2004/ql#');
 INSERT INTO namespace VALUES ('ra', 'http://www.rossettiarchive.org/schema#');
 INSERT INTO namespace VALUES ('random', 'http://random.ioctl.org/#');
 INSERT INTO namespace VALUES ('rcs', 'http://www.w3.org/2001/03swell/rcs#');
+INSERT INTO namespace VALUES ('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+INSERT INTO namespace VALUES ('rdfs', 'http://www.w3.org/2000/01/rdf-schema#');
 INSERT INTO namespace VALUES ('rec', 'http://www.w3.org/2001/02pd/rec54#');
 INSERT INTO namespace VALUES ('ref', 'http://purl.org/rss/1.0/modules/reference/');
 INSERT INTO namespace VALUES ('rel', 'http://purl.org/vocab/relationship/');
@@ -610,6 +591,7 @@ INSERT INTO namespace VALUES ('rs', 'http://www.w3.org/2001/sw/DataAccess/tests/
 INSERT INTO namespace VALUES ('rss2', 'http://backend.userland.com/RSS2#');
 INSERT INTO namespace VALUES ('rss1', 'http://purl.org/rss/1.0/');
 INSERT INTO namespace VALUES ('s', 'http://snipsnap.org/rdf/snip-schema#');
+INSERT INTO namespace VALUES ('schema', 'http://schema.org/');
 INSERT INTO namespace VALUES ('schemaweb', 'http://www.schemaweb.info/schemas/meta/rdf/');
 INSERT INTO namespace VALUES ('s0', 'http://www.w3.org/2000/PhotoRDF/dc-1-0#');
 INSERT INTO namespace VALUES ('s1', 'http://sophia.inria.fr/~enerbonn/rdfpiclang#');
@@ -617,6 +599,7 @@ INSERT INTO namespace VALUES ('se', 'http://www.w3.org/2004/02/skos/extensions#'
 INSERT INTO namespace VALUES ('semblog', 'http://www.semblog.org/ns/semblog/0.1/');
 INSERT INTO namespace VALUES ('service', 'http://www.daml.org/services/owl-s/1.0/Service.owl#');
 INSERT INTO namespace VALUES ('signage', 'http://www.aktors.org/ontology/signage#');
+INSERT INTO namespace VALUES ('skos', 'http://www.w3.org/2004/02/skos/core#');
 INSERT INTO namespace VALUES ('slash', 'http://purl.org/rss/1.0/modules/slash/');
 INSERT INTO namespace VALUES ('smw', 'http://smw.ontoware.org/2005/smw#');
 INSERT INTO namespace VALUES ('space', 'http://frot.org/space/0.1/');
@@ -653,6 +636,10 @@ INSERT INTO namespace VALUES ('wn', 'http://xmlns.com/wordnet/1.6/');
 INSERT INTO namespace VALUES ('wot', 'http://xmlns.com/wot/0.1/');
 INSERT INTO namespace VALUES ('x', 'http://www.softwarestudio.org/libical/UsingLibical/node49.html#');
 INSERT INTO namespace VALUES ('xfn', 'http://gmpg.org/xfn/1#');
+INSERT INTO namespace VALUES ('xhtml', 'http://www.w3.org/1999/xhtml');
+INSERT INTO namespace VALUES ('xlink', 'http://www.w3.org/1999/xlink/');
+INSERT INTO namespace VALUES ('xml', 'http://www.w3.org/XML/1998/namespace');
+INSERT INTO namespace VALUES ('xsd', 'http://www.w3.org/2001/XMLSchema#');
 INSERT INTO namespace VALUES ('dbpedia', 'http://dbpedia.org/property/');
 INSERT INTO namespace VALUES ('dbo', 'http://dbpedia.org/ontology/');
 INSERT INTO namespace VALUES ('prov', 'http://www.w3.org/ns/prov#');
@@ -683,6 +670,7 @@ INSERT INTO namespace VALUES ('sioc', 'http://rdfs.org/sioc/ns#');
 INSERT INTO namespace VALUES ('swrc', 'http://swrc.ontoware.org/ontology#');
 INSERT INTO namespace VALUES ('swivt', 'http://semantic-mediawiki.org/swivt/1.0#');
 INSERT INTO namespace VALUES ('csi', 'http://culture.si/en/Special:URIResolver/');
+
 
 --
 -- Name: config_pkey; Type: CONSTRAINT; Schema: sparql; Owner: sparql; Tablespace: 
