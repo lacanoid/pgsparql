@@ -1,6 +1,6 @@
 SET search_path = sparql, pg_catalog;
 
-INSERT INTO namespace VALUES ('results', 'https://www.w3.org/2005/sparql-results#');
+INSERT INTO namespace VALUES ('results', 'http://www.w3.org/2005/sparql-results#');
 
 alter function get_properties rename to get_properties0;
 
