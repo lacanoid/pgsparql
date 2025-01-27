@@ -422,19 +422,18 @@ INSERT INTO endpoint VALUES ('wikidata',  'https://query.wikidata.org/sparql');
 -- Data for Name: namespace; Type: TABLE DATA; Schema: sparql; Owner: sparql
 --
 
-INSERT INTO namespace VALUES ('xml', 'http://www.w3.org/XML/1998/namespace');
-INSERT INTO namespace VALUES ('xsd', 'http://www.w3.org/2001/XMLSchema#');
-INSERT INTO namespace VALUES ('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
-INSERT INTO namespace VALUES ('rdfs', 'http://www.w3.org/2000/01/rdf-schema#');
-INSERT INTO namespace VALUES ('xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-INSERT INTO namespace VALUES ('owl', 'http://www.w3.org/2002/07/owl#');
+INSERT INTO namespace VALUES ('xml',    'http://www.w3.org/XML/1998/namespace');
+INSERT INTO namespace VALUES ('xsd',    'http://www.w3.org/2001/XMLSchema#');
+INSERT INTO namespace VALUES ('rdf',    'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+INSERT INTO namespace VALUES ('rdfs',   'http://www.w3.org/2000/01/rdf-schema#');
+INSERT INTO namespace VALUES ('xsi',    'http://www.w3.org/2001/XMLSchema-instance');
+INSERT INTO namespace VALUES ('owl',    'http://www.w3.org/2002/07/owl#');
 INSERT INTO namespace VALUES ('schema', 'http://schema.org/');
-INSERT INTO namespace VALUES ('dc', 'http://purl.org/dc/elements/1.1/');
-INSERT INTO namespace VALUES ('dcterms', 'http://purl.org/dc/terms/');
-INSERT INTO namespace VALUES ('skos', 'http://www.w3.org/2004/02/skos/core#');
-INSERT INTO namespace VALUES ('xhtml', 'http://www.w3.org/1999/xhtml');
-INSERT INTO namespace VALUES ('xlink', 'http://www.w3.org/1999/xlink/');
-INSERT INTO namespace VALUES ('results', 'https://www.w3.org/2005/sparql-results#');
+INSERT INTO namespace VALUES ('dc',     'http://purl.org/dc/elements/1.1/');
+INSERT INTO namespace VALUES ('dcterms','http://purl.org/dc/terms/');
+INSERT INTO namespace VALUES ('skos',   'http://www.w3.org/2004/02/skos/core#');
+INSERT INTO namespace VALUES ('xhtml',  'http://www.w3.org/1999/xhtml');
+INSERT INTO namespace VALUES ('xlink',  'http://www.w3.org/1999/xlink/');
 
 -- more obscure items
 
@@ -491,7 +490,7 @@ INSERT INTO namespace VALUES ('doap2', 'http://usefulinc.com/ns/doap/#');
 INSERT INTO namespace VALUES ('doc', 'http://www.w3.org/2000/10/swap/pim/doc#');
 INSERT INTO namespace VALUES ('e', 'http://eulersharp.sourceforge.net/2003/03swap/log-rules#');
 INSERT INTO namespace VALUES ('ecademy', 'http://www.ecademy.com/namespace/');
-INSERT INTO namespace VALUES ('eg', 'http://example.org/');
+INSERT INTO namespace VALUES ('eg',  'http://example.org/');
 INSERT INTO namespace VALUES ('enc', 'http://purl.oclc.org/net/rss_2.0/enc#');
 INSERT INTO namespace VALUES ('ent', 'http://jena.hpl.hp.com/ENT/1.0/#');
 INSERT INTO namespace VALUES ('eor', 'http://dublincore.org/2000/03/13/eor#');
@@ -674,7 +673,6 @@ INSERT INTO namespace VALUES ('sioc', 'http://rdfs.org/sioc/ns#');
 INSERT INTO namespace VALUES ('swrc', 'http://swrc.ontoware.org/ontology#');
 INSERT INTO namespace VALUES ('swivt', 'http://semantic-mediawiki.org/swivt/1.0#');
 INSERT INTO namespace VALUES ('csi', 'http://culture.si/en/Special:URIResolver/');
-
 
 --
 -- Name: config_pkey; Type: CONSTRAINT; Schema: sparql; Owner: sparql; Tablespace: 

@@ -419,16 +419,6 @@ INSERT INTO endpoint VALUES ('geonames',  'http://www.lotico.com:3030/lotico/spa
 INSERT INTO endpoint VALUES ('wikidata',  'https://query.wikidata.org/sparql');
 
 --
--- Data for Name: endpoint; Type: TABLE DATA; Schema: sparql; Owner: sparql
---
-
-INSERT INTO endpoint VALUES ('localhost', 'http://localhost:8890/sparql/');
-INSERT INTO endpoint VALUES ('virtuoso',  'http://localhost:8890/sparql/');
-INSERT INTO endpoint VALUES ('dbpedia',   'http://dbpedia.org/sparql/');
-INSERT INTO endpoint VALUES ('geonames',  'http://www.lotico.com:3030/lotico/sparql');
-INSERT INTO endpoint VALUES ('wikidata',  'https://query.wikidata.org/sparql');
-
---
 -- Data for Name: namespace; Type: TABLE DATA; Schema: sparql; Owner: sparql
 --
 
@@ -500,7 +490,7 @@ INSERT INTO namespace VALUES ('doap2', 'http://usefulinc.com/ns/doap/#');
 INSERT INTO namespace VALUES ('doc', 'http://www.w3.org/2000/10/swap/pim/doc#');
 INSERT INTO namespace VALUES ('e', 'http://eulersharp.sourceforge.net/2003/03swap/log-rules#');
 INSERT INTO namespace VALUES ('ecademy', 'http://www.ecademy.com/namespace/');
-INSERT INTO namespace VALUES ('eg', 'http://example.org/');
+INSERT INTO namespace VALUES ('eg',  'http://example.org/');
 INSERT INTO namespace VALUES ('enc', 'http://purl.oclc.org/net/rss_2.0/enc#');
 INSERT INTO namespace VALUES ('ent', 'http://jena.hpl.hp.com/ENT/1.0/#');
 INSERT INTO namespace VALUES ('eor', 'http://dublincore.org/2000/03/13/eor#');
