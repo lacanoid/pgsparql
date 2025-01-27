@@ -7,3 +7,11 @@ CREATE EXTENSION sparql;
  sparql | 1.0     | sparql | SPARQL compiler
 
 
+DROP extension sparql;
+
+CREATE EXTENSION sparql VERSION '0.3';
+ALTER EXTENSION sparql update;
+
+\dx sparql
+ sparql | 1.0     | sparql | SPARQL compiler
+

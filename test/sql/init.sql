@@ -5,3 +5,9 @@ CREATE EXTENSION sparql;
 
 \dx sparql
 
+DROP extension sparql;
+
+CREATE EXTENSION sparql VERSION '0.3';
+ALTER EXTENSION sparql update;
+
+\dx sparql
