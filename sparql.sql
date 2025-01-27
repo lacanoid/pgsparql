@@ -432,18 +432,18 @@ INSERT INTO endpoint VALUES ('wikidata',  'https://query.wikidata.org/sparql');
 -- Data for Name: namespace; Type: TABLE DATA; Schema: sparql; Owner: sparql
 --
 
-INSERT INTO namespace VALUES ('xml', 'http://www.w3.org/XML/1998/namespace');
-INSERT INTO namespace VALUES ('xsd', 'http://www.w3.org/2001/XMLSchema#');
-INSERT INTO namespace VALUES ('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
-INSERT INTO namespace VALUES ('rdfs', 'http://www.w3.org/2000/01/rdf-schema#');
-INSERT INTO namespace VALUES ('xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-INSERT INTO namespace VALUES ('owl', 'http://www.w3.org/2002/07/owl#');
+INSERT INTO namespace VALUES ('xml',    'http://www.w3.org/XML/1998/namespace');
+INSERT INTO namespace VALUES ('xsd',    'http://www.w3.org/2001/XMLSchema#');
+INSERT INTO namespace VALUES ('rdf',    'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+INSERT INTO namespace VALUES ('rdfs',   'http://www.w3.org/2000/01/rdf-schema#');
+INSERT INTO namespace VALUES ('xsi',    'http://www.w3.org/2001/XMLSchema-instance');
+INSERT INTO namespace VALUES ('owl',    'http://www.w3.org/2002/07/owl#');
 INSERT INTO namespace VALUES ('schema', 'http://schema.org/');
-INSERT INTO namespace VALUES ('dc', 'http://purl.org/dc/elements/1.1/');
-INSERT INTO namespace VALUES ('dcterms', 'http://purl.org/dc/terms/');
-INSERT INTO namespace VALUES ('skos', 'http://www.w3.org/2004/02/skos/core#');
-INSERT INTO namespace VALUES ('xhtml', 'http://www.w3.org/1999/xhtml');
-INSERT INTO namespace VALUES ('xlink', 'http://www.w3.org/1999/xlink/');
+INSERT INTO namespace VALUES ('dc',     'http://purl.org/dc/elements/1.1/');
+INSERT INTO namespace VALUES ('dcterms','http://purl.org/dc/terms/');
+INSERT INTO namespace VALUES ('skos',   'http://www.w3.org/2004/02/skos/core#');
+INSERT INTO namespace VALUES ('xhtml',  'http://www.w3.org/1999/xhtml');
+INSERT INTO namespace VALUES ('xlink',  'http://www.w3.org/1999/xlink/');
 
 -- more obscure items
 
