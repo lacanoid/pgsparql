@@ -1,7 +1,7 @@
 PG_CONFIG = pg_config
 PKG_CONFIG = pkg-config
 
-extension_version = 1.0
+extension_version = 2.0
 
 EXTENSION = sparql
 PGFILEDESC = "sparql - SPARQL compiler"

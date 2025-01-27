@@ -1,3 +1,6 @@
+version 2.0 alpha
+- 
+
 version 1.0
 - added 'results' namespace
 - removed label from `get_properties()`

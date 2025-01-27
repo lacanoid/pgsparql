@@ -1,6 +1,6 @@
 comment = 'SPARQL compiler'
 default_version = 1.0
-requires = 'plperlu'
+requires = 'plperlu,plperl'
 superuser = YES
 schema = 'sparql'
 
