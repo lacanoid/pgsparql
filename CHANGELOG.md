@@ -6,6 +6,7 @@ version 1.0
 - namespace 'dbpedia' renamed to 'dbp'
 - removed `label` column from `get_properties()`
 - improved tests
+- removed .travis.yml
 
 version 0.4
 - added get_references() function
@@ -14,7 +15,7 @@ version 0.4
 - added 'schema' [http://schema.org/]  namespace
 - added openarchives.org namespaces 'oai','ore','oai_dc' 
 - added other wanted namespaces: 'xsi', 'dcat'
-  added .travis.yml
+- added .travis.yml
 
 version 0.3
 - get_properties() function improvements
