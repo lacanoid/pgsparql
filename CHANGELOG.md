@@ -1,4 +1,5 @@
-Change log
+Changelog
+=========
 
 version 1.0
 - added 'results' namespace
