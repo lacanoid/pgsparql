@@ -1,6 +1,13 @@
 SET search_path = sparql, pg_catalog;
 
+INSERT INTO endpoint  VALUES ('europeana', 'https://data.europa.eu/sparql');
+
 INSERT INTO namespace VALUES ('results', 'http://www.w3.org/2005/sparql-results#');
+UPDATE namespace SET name = 'dbp' WHERE uri = 'http://dbpedia.org/property/';
+--INSERT INTO namespace VALUES ('dbp',     'http://dbpedia.org/property/');
+--INSERT INTO namespace VALUES ('dbo',     'http://dbpedia.org/ontology/');
+INSERT INTO namespace VALUES ('dbr',     'http://dbpedia.org/resource/');
+
 
 alter function get_properties rename to get_properties0;
 

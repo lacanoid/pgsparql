@@ -1,5 +1,4 @@
-version 2.0 alpha
-- 
+Change log
 
 version 1.0
 - added 'results' namespace

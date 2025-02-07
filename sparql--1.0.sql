@@ -1,7 +1,7 @@
 -- CREATE SCHEMA sparql;
 -- version 0.4
 
-COMMENT ON SCHEMA sparql IS 'Interface to Virtuoso SPARQL endpoint';
+COMMENT ON SCHEMA sparql IS 'SPARQL utilities';
 
 SET search_path = sparql, pg_catalog;
 
@@ -417,23 +417,38 @@ INSERT INTO endpoint VALUES ('virtuoso',  'http://localhost:8890/sparql/');
 INSERT INTO endpoint VALUES ('dbpedia',   'http://dbpedia.org/sparql/');
 INSERT INTO endpoint VALUES ('geonames',  'http://www.lotico.com:3030/lotico/sparql');
 INSERT INTO endpoint VALUES ('wikidata',  'https://query.wikidata.org/sparql');
+INSERT INTO endpoint VALUES ('europeana', 'https://data.europa.eu/sparql');
 
 --
 -- Data for Name: namespace; Type: TABLE DATA; Schema: sparql; Owner: sparql
 --
 
-INSERT INTO namespace VALUES ('xml',    'http://www.w3.org/XML/1998/namespace');
-INSERT INTO namespace VALUES ('xsd',    'http://www.w3.org/2001/XMLSchema#');
-INSERT INTO namespace VALUES ('rdf',    'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
-INSERT INTO namespace VALUES ('rdfs',   'http://www.w3.org/2000/01/rdf-schema#');
-INSERT INTO namespace VALUES ('xsi',    'http://www.w3.org/2001/XMLSchema-instance');
-INSERT INTO namespace VALUES ('owl',    'http://www.w3.org/2002/07/owl#');
-INSERT INTO namespace VALUES ('schema', 'http://schema.org/');
-INSERT INTO namespace VALUES ('dc',     'http://purl.org/dc/elements/1.1/');
-INSERT INTO namespace VALUES ('dcterms','http://purl.org/dc/terms/');
-INSERT INTO namespace VALUES ('skos',   'http://www.w3.org/2004/02/skos/core#');
-INSERT INTO namespace VALUES ('xhtml',  'http://www.w3.org/1999/xhtml');
-INSERT INTO namespace VALUES ('xlink',  'http://www.w3.org/1999/xlink/');
+INSERT INTO namespace VALUES ('xml',      'http://www.w3.org/XML/1998/namespace');
+INSERT INTO namespace VALUES ('xhtml',    'http://www.w3.org/1999/xhtml');
+INSERT INTO namespace VALUES ('xlink',    'http://www.w3.org/1999/xlink/');
+INSERT INTO namespace VALUES ('rdf',      'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+INSERT INTO namespace VALUES ('rdfs',     'http://www.w3.org/2000/01/rdf-schema#');
+INSERT INTO namespace VALUES ('xsd',      'http://www.w3.org/2001/XMLSchema#');
+INSERT INTO namespace VALUES ('xsi',      'http://www.w3.org/2001/XMLSchema-instance');
+INSERT INTO namespace VALUES ('owl',      'http://www.w3.org/2002/07/owl#');
+INSERT INTO namespace VALUES ('ical',     'http://www.w3.org/2002/12/cal/icaltzd#');
+INSERT INTO namespace VALUES ('skos',     'http://www.w3.org/2004/02/skos/core#');
+INSERT INTO namespace VALUES ('results',  'http://www.w3.org/2005/sparql-results#');
+INSERT INTO namespace VALUES ('vcard',    'http://www.w3.org/2006/vcard/ns#');
+INSERT INTO namespace VALUES ('dcat',     'http://www.w3.org/tr/vocab-dcat/');
+INSERT INTO namespace VALUES ('schema',   'http://schema.org/');
+INSERT INTO namespace VALUES ('foaf',     'http://xmlns.com/foaf/0.1/');
+INSERT INTO namespace VALUES ('dc',       'http://purl.org/dc/elements/1.1/');
+INSERT INTO namespace VALUES ('dcterms',  'http://purl.org/dc/terms/');
+INSERT INTO namespace VALUES ('dbp',      'http://dbpedia.org/property/');
+INSERT INTO namespace VALUES ('dbo',      'http://dbpedia.org/ontology/');
+INSERT INTO namespace VALUES ('dbr',      'http://dbpedia.org/resource/');
+INSERT INTO namespace VALUES ('ese',      'http://www.europeana.eu/schemas/ese/');
+INSERT INTO namespace VALUES ('edm',      'http://www.europeana.eu/schemas/edm/');
+INSERT INTO namespace VALUES ('oai',      'http://www.openarchives.org/OAI/2.0/');
+INSERT INTO namespace VALUES ('oai_dc',   'http://www.openarchives.org/OAI/2.0/oai_dc/');
+INSERT INTO namespace VALUES ('ore',      'http://www.openarchives.org/ore/terms/');
+
 
 -- more obscure items
 
@@ -494,12 +509,6 @@ INSERT INTO namespace VALUES ('eg',  'http://example.org/');
 INSERT INTO namespace VALUES ('enc', 'http://purl.oclc.org/net/rss_2.0/enc#');
 INSERT INTO namespace VALUES ('ent', 'http://jena.hpl.hp.com/ENT/1.0/#');
 INSERT INTO namespace VALUES ('eor', 'http://dublincore.org/2000/03/13/eor#');
-INSERT INTO namespace VALUES ('ese', 'http://www.europeana.eu/schemas/ese/');
-INSERT INTO namespace VALUES ('edm', 'http://www.europeana.eu/schemas/edm/');
-INSERT INTO namespace VALUES ('oai', 'http://www.openarchives.org/OAI/2.0/');
-INSERT INTO namespace VALUES ('oai_dc', 'http://www.openarchives.org/OAI/2.0/oai_dc/');
-INSERT INTO namespace VALUES ('ore', 'http://www.openarchives.org/ore/terms/');
-INSERT INTO namespace VALUES ('dcat', 'http://www.w3.org/tr/vocab-dcat/');
 INSERT INTO namespace VALUES ('ethan', 'http://spire.umbc.edu/ontologies/ethan.owl#');
 INSERT INTO namespace VALUES ('ev', 'http://purl.org/rss/1.0/modules/event/');
 INSERT INTO namespace VALUES ('event', 'http://ebiquity.umbc.edu/ontology/event.owl#');
@@ -643,11 +652,7 @@ INSERT INTO namespace VALUES ('wn', 'http://xmlns.com/wordnet/1.6/');
 INSERT INTO namespace VALUES ('wot', 'http://xmlns.com/wot/0.1/');
 INSERT INTO namespace VALUES ('x', 'http://www.softwarestudio.org/libical/UsingLibical/node49.html#');
 INSERT INTO namespace VALUES ('xfn', 'http://gmpg.org/xfn/1#');
-INSERT INTO namespace VALUES ('dbpedia', 'http://dbpedia.org/property/');
-INSERT INTO namespace VALUES ('dbo', 'http://dbpedia.org/ontology/');
 INSERT INTO namespace VALUES ('prov', 'http://www.w3.org/ns/prov#');
-INSERT INTO namespace VALUES ('vcard', 'http://www.w3.org/2006/vcard/ns#');
-INSERT INTO namespace VALUES ('ical', 'http://www.w3.org/2002/12/cal/icaltzd#');
 INSERT INTO namespace VALUES ('m3c', 'http://www.m3c.si/xmlns/m3c/2006-06#');
 INSERT INTO namespace VALUES ('akt', 'http://www.aktors.org/ontology/portal#');
 INSERT INTO namespace VALUES ('an', 'http://www.w3.org/2000/10/annotation-ns#');
@@ -658,7 +663,6 @@ INSERT INTO namespace VALUES ('daml', 'http://www.daml.org/2001/03/daml+oil#');
 INSERT INTO namespace VALUES ('doa', 'http://www.daml.org/2001/10/html/airport-ont#');
 INSERT INTO namespace VALUES ('doap', 'http://usefulinc.com/ns/doap#');
 INSERT INTO namespace VALUES ('exif', 'http://www.w3.org/2000/10/swap/pim/exif#');
-INSERT INTO namespace VALUES ('foaf', 'http://xmlns.com/foaf/0.1/');
 INSERT INTO namespace VALUES ('georss', 'http://www.georss.org/georss/');
 INSERT INTO namespace VALUES ('ical2', 'http://www.w3.org/2002/12/cal/ical#');
 INSERT INTO namespace VALUES ('iwi', 'http://www.iwi-iuk.org/material/RDF/Schema/Class/iwi#');

@@ -1,4 +1,4 @@
-comment = 'SPARQL compiler'
+comment = 'SPARQL utilities'
 default_version = 1.0
 requires = 'plperlu,plperl'
 superuser = YES
