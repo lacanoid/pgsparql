@@ -2,8 +2,10 @@ Changelog
 =========
 
 version 1.0
-- added 'results' namespace
-- removed label from `get_properties()`
+- added 'results' and 'dbr' namespaces
+- namespace 'dbpedia' renamed to 'dbp'
+- removed `label` column from `get_properties()`
+- improved tests
 
 version 0.4
 - added get_references() function
