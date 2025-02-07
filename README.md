@@ -1,5 +1,5 @@
-SPARQL compiler functions  for PostgreSQL
-=======================================
+SPARQL utilities for PostgreSQL
+===============================
 
 This is an extension for PostgreSQL. 
 

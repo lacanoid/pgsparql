@@ -1,0 +1,53 @@
+{
+   "name": "sparql",
+   "abstract": "SPARQL utilities",
+   "description": "Various functions for handling SPARQL queries",
+   "version": "1.0.0",
+   "maintainer": [
+      "Ziga Kranjec <ziga@ljudmila.org>"
+   ],
+   "license": {
+      "PostgreSQL": "http://www.postgresql.org/about/licence"
+   },
+   "prereqs": {
+      "runtime": {
+         "requires": {
+            "pgperl": 0,
+            "pgperlu": 0,
+            "PostgreSQL": "10.0.0"
+         },
+         "recommends": {
+            "PostgreSQL": "17.0.0",
+            "dblink": 0
+         }
+      }
+   },
+   "provides": {
+     "sparql": {
+       "file": "sparql.sql",
+       "docfile": "README.md",
+       "version": "1.0.0",
+       "abstract": "SQL/SPARQL utilities"
+     }
+   },
+   "resources": {
+      "homepage": "https://github.com/lacanoid/pgsparql/wiki",
+      "bugtracker": {
+         "web": "https://github.com/lacanoid/pgsparql/issues"
+      },
+      "repository": {
+        "url":  "https://github.com/lacanoid/pgsparql.git",
+        "web":  "https://github.com/lacanoid/pgsparql",
+        "type": "git"
+      }
+   },
+   "generated_by": "Ziga Kranjec <ziga@ljudmila.org>",
+   "meta-spec": {
+      "version": "1.0.0",
+      "url": "http://pgxn.org/meta/spec.txt"
+   },
+   "tags": [
+      "function", "functions",
+      "external data"
+   ]
+}

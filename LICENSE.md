@@ -1,4 +1,4 @@
-© 2016 Žiga Kranjec <lacanoid@ljudmila.org>
+© 2016+ Žiga Kranjec <lacanoid@ljudmila.org>
 
 Permission to use, copy, modify, and distribute this software and its
 documentation for any purpose, without fee, and without a written
