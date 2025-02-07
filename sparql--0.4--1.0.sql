@@ -31,11 +31,6 @@ $iri=~s!(\\|>|\n|\r|\t)!{"\t"=>'\t',"\n"=>'\n',"\r"=>'\r','>'=>'\>','\\'=>'\\\\'
 $iri=qq{<$iri>};
 my $query = <<"SPARQL";
 prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>
-prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-prefix vc:    <http://www.w3.org/2006/vcard/ns#>
-prefix swivt: <http://semantic-mediawiki.org/swivt/1.0#>
-prefix dc:    <http://purl.org/dc/elements/1.1/>
-prefix foaf:  <http://xmlns.com/foaf/0.1/>
 
 select distinct 
  (?p as ?predicate) 
