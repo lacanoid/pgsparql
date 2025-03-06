@@ -14,7 +14,7 @@ Installation
 
 Install appropriate Perl packages
 
-    apt install libwww-perl libtry-tiny-perl
+    apt install libwww-perl libtry-tiny-perl libdatetime-perl
 
 To build and install this module:
 
