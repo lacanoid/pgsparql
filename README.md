@@ -12,7 +12,7 @@ It might or might not work with other RDF backends.
 Installation
 ------------
 
-Install appropriate Perl packages
+Install needed Perl packages
 
     apt install libwww-perl libtry-tiny-perl libdatetime-perl
 
