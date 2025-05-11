@@ -1,5 +1,10 @@
 Changelog
 =========
+version 2.0 alpha
+
+
+version 1.1
+- grant permissions on `namespace` and `endpoint` to public
 
 version 1.0
 - added 'results' and 'dbr' namespaces

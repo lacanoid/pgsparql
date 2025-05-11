@@ -1,12 +1,12 @@
 PG_CONFIG = pg_config
 PKG_CONFIG = pkg-config
 
-extension_version = 1.0
+extension_version = 1.1
 
 EXTENSION = sparql
 PGFILEDESC = "sparql - SPARQL compiler"
 
-DATA = $(EXTENSION)--0.3.sql $(EXTENSION)--0.3--0.4.sql $(EXTENSION)--0.4--1.0.sql 
+DATA = $(EXTENSION)--0.3.sql $(EXTENSION)--0.3--0.4.sql $(EXTENSION)--0.4--1.0.sql $(EXTENSION)--1.0--1.1.sql
 DATA_built = $(EXTENSION)--$(extension_version).sql
 
 REGRESS = init base sparql
